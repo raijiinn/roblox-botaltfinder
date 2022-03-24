@@ -58,8 +58,8 @@ def checkacc(name,passs):
         response = session.post('https://auth.roblox.com/v2/login', headers=headers, data=data)
         print(response.json())
         cookie = session.cookies['.ROBLOSECURITY']
-        with open ('cookies.txt','w') as file:
-            file.write(cookie)
+        with open ('cookies.txt','a') as file:
+            file.write(cookie + '\n')
     except:
        print('error logging in noob LOL')
     
