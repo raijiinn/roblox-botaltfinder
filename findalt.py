@@ -99,7 +99,7 @@ def checkacc(
             )
         print(response.json())
         cookie = session.cookies[".ROBLOSECURITY"]
-        with open("cookies.txt", "w") as file:
+        with open("cookies.txt", "a") as file:
             file.write(cookie + "\n")
     except Exception as err:
         print(err)
