@@ -81,8 +81,7 @@ def checkacc(
             "content-type": "application/json;charset=UTF-8",
             "User-Agent": "Chrome",
         }
-        ex = random.choice(proxyee)
-        proxy = {"http": ex, "https": ex}
+      
         data = {"ctype": "Username", "cvalue": name, "password": passs}
         data = str(data)
         if proxiees == True:
