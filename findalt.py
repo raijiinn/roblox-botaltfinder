@@ -12,7 +12,7 @@ def FindBot():
        try:   
         Name = RandomName()   
         r = s.get(f"https://www.roblox.com/search/users/results?maxRows=100&keyword={Name}")  
-        for i in range(0,r.json()['TotalResults'],int(r.json()['TotalResults']/2)):
+        for i in range(0,r.json()['TotalResults'],100):
             req = s.get(f"https://www.roblox.com/search/users/results?maxRows=100&keyword={Name}&startIndex={str(i)}")  
             if 'UserSearchResults' in r.json():
                 for user in req.json()["UserSearchResults"]:
